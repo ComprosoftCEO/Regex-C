@@ -37,6 +37,10 @@ typedef enum {
 #define ALL_CHARS " !\"#$\%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~"
 #define ALL_CHARS_PADDING "\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0"
 
+#define FUNC_FAILED (rIndex) -1			// When the call to regex->func fails
+
+
+
 //Private regular expression object
 typedef struct REGEX_OBJECT {
     union {
@@ -54,6 +58,7 @@ typedef struct REGEX_OBJECT {
     } d2;
 
     eRegex_Type type;   // Type of this node
+	rIndex (*func)(struct REGEX_OBJECT* this,const char* str);		//Function to call
 } Regex_Obj_t, *pRegex_Obj_t;
 
 typedef void (*Regex_Free_Func)(pRegex_Obj_t);
@@ -64,21 +69,26 @@ typedef void (*Regex_Free_Func)(pRegex_Obj_t);
 pRegex_Obj_t regex_new_group(bool orGroup);
 bool regex_add_group(pRegex_Obj_t regex, pRegex_Obj_t to_add);
 void regex_free_group(pRegex_Obj_t);
+rIndex regex_do_or_group(pRegex_Obj_t regex, const char* str);
+rIndex regex_do_and_group(pRegex_Obj_t regex, const char* str);
 
 
 //String functions
 pRegex_Obj_t regex_new_string(const char* str, size_t len);
 void regex_free_string(pRegex_Obj_t);
+rIndex regex_do_string(pRegex_Obj_t regex, const char* str);
 
 
 //Character class
 //  char_data automatically handles the parsing, starting at [ and ending at ]
 pRegex_Obj_t regex_new_char_class(const char* char_data);
 pRegex_Obj_t regex_free_char_class(pRegex_Obj_t);
+rIndex regex_do_char_class(pRegex_Obj_t regex, const char* str);
 
 
 //Bounds object
 pRegex_Obj_t regex_new_bounds(rIndex min, rIndex max, pRegex_Obj_t to_add);
 void regex_free_bounds(pRegex_Obj_t);
+rIndex regex_do_bounds(pRegex_Obj_t regex, const char* str);
 
 #endif // PRIVATE_REGEX_HEADER Included

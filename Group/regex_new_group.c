@@ -16,8 +16,13 @@ pRegex_Obj_t regex_new_group(bool orGroup) {
     regex->d2.arrlen[ARRLEN_ALLOC] = ARRLEN_INIT;
     regex->d2.arrlen[ARRLEN_INUSE] = 0;
 
-    if (orGroup) {regex->type = REGEX_OR_GROUP;
-    } else {regex->type = REGEX_AND_GROUP;}
+    if (orGroup) {
+        regex->type = REGEX_OR_GROUP;
+        regex->func = regex_do_or_group;
+ 	} else {
+        regex->type = REGEX_AND_GROUP;
+		regex->func = regex_do_and_group;
+    }
 
     return regex;
 }

@@ -44,6 +44,12 @@
 		<Unit filename="Group/regex_add_group.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="Group/regex_do_and_group.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="Group/regex_do_or_group.c">
+			<Option compilerVar="CC" />
+		</Unit>
 		<Unit filename="Group/regex_free_group.c">
 			<Option compilerVar="CC" />
 		</Unit>
