@@ -28,5 +28,6 @@ pRegex_Obj_t regex_new_string(const char* str, size_t len) {
     }
 
     regex->d1.str[len+1] = 0;   /*Null terminate */
+	regex->func = regex_do_string;
     return regex;
 }
